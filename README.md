@@ -2,164 +2,85 @@
 
 # 🧭 Codex Shared Best Practice (CSBP)
 
-A three-file protocol kit for maintaining a controlled, operator-approved shared best practice layer in Codex.
+CSBP is a lightweight three-file protocol kit for keeping recurring Codex best practices explicit, reviewed, and separate from automatic memory or `AGENTS.md`.
 
-## 🌍 Publication Status
+It is not a memory that writes itself.
 
-This repository is the public source surface for the CSBP protocol kit.
+It is a review gate for practices that may deserve to persist.
 
-It publishes the protocol texts themselves:
+## 🚀 Start here
 
-- `CSBP-entry-point.txt`
-- `shared-best-practice.txt`
-- `shared-best-practice-compiler.txt`
+Long-lived Codex setups usually fail in two opposite ways:
 
-It does not publish a software package, CLI, plugin, or hosted service.
+- useful guidance stays buried in chat history
+- useful guidance gets promoted too quickly into `AGENTS.md`
 
-## 📘 What this is
+A third failure mode is worse: automatic persistence.
 
-CSBP is not a plugin, package, or CLI tool. It is not a replacement for `AGENTS.md`.
+Session residue, operator preferences, one-off fixes, and rough observations can start shaping future behavior without enough review.
 
-It is a portable AI-only protocol kit for Codex environments that need a durable, reviewable best-practice layer without turning that layer into a second operating contract.
+CSBP does the opposite.
 
-It is also not a system that turns session history into active guidance automatically.
+It gives Codex a controlled middle layer:
 
-In normal use, the operator does not sit down and manually maintain these files. The operator boots the system, Codex reads the active layers, and new rules are discussed only when there is something worth promoting.
+- 🧠 below operator instruction
+- 📌 below `AGENTS.md`
+- 🗂️ below local project instructions
+- 🧾 separate from chat history
+- ✋ controlled by the operator
 
-## 🧩 Why it exists
+CSBP is for recurring operational practices that are strong enough to reuse, but not strong enough to become host contract.
 
-In long-lived Codex setups, recurring guidance tends to collapse into one of two bad shapes:
+## 🪶 Lightweight by design
 
-- everything stays trapped in chat history
-- everything gets promoted into `AGENTS.md`
+CSBP has no background writer.
 
-A third failure mode is automatic persistence: raw session carryover, operator preference, and operational guidance all end up mixed in the same layer.
+During normal runtime, it only loads:
 
-CSBP gives you a middle layer: small, explicit, operator-controlled, and separate from the host contract.
+1. `CSBP-entry-point.txt`
+2. `shared-best-practice.txt`
 
-## 🔄 Example workflow
+The compiler is not active unless the operator asks to form, revise, promote, deprecate, or remove a practice.
 
-### ⚠️ Without CSBP
+That keeps the layer light:
 
-A recurring issue shows up during work.
-It gets mentioned in chat, half-remembered in later sessions, or promoted too quickly into `AGENTS.md`.
-Over time, useful guidance mixes with one-off observations, and the system becomes harder to trust.
+- no automatic memory capture
+- no silent rule creation
+- no background promotion
+- no runtime writes by default
+- no practice changes without operator approval
 
-### ✅ With CSBP
+Codex may propose.
 
-The operator notices a recurring pattern and raises it with Codex.
-Codex checks whether the pattern is strong enough for CSBP: is it recurring, actionable, preventive, and broader than one project or one session?
+The compiler may evaluate.
 
-If the answer is no, it stays out.
-If the answer is yes, Codex proposes a candidate block, the operator reviews it, and only an approved practice reaches the runtime file.
+The operator decides.
 
-### 🛠️ Candidate to promotion
+The runtime file changes only after approval.
 
-Example flow:
+You can also maintain `shared-best-practice.txt` manually by following the documented block shape and promotion rules.
 
-1. During work, the operator notices a recurring mistake.
-2. The operator asks Codex whether it fits CSBP.
-3. Codex evaluates it with the compiler rules.
-4. The candidate is refined, narrowed, split, or rejected.
-5. If approved, the runtime block is added to `shared-best-practice.txt`.
+## 🧩 The three files
 
-### 🚫 What stays out
+CSBP is intentionally small.
 
-Not every useful observation becomes a practice.
+| File | Role | When it is read |
+|---|---|---|
+| 🚪 `CSBP-entry-point.txt` | Bootstrap and routing layer. Defines what CSBP is, authority order, usage modes, read order, and write restrictions. | First, every session. |
+| 📌 `shared-best-practice.txt` | Runtime layer. Stores promoted practices only. Active practices may guide work when relevant. | After entry point. |
+| 🧪 `shared-best-practice-compiler.txt` | Formation layer. Evaluates, normalizes, promotes, revises, deprecates, removes, or rejects candidate practices. | Only when the operator opens practice formation or maintenance work. |
 
-Examples that stay out:
+The split matters.
 
-- one-off fixes
-- project-local conventions
-- rough session notes
-- operator preferences that are not stable enough
-- explanations that do not translate into an operational rule
+The runtime layer applies approved practices.
 
-This is one of the main points of CSBP: it is not just a place to keep good ideas, it is also a filter that keeps weak or local material out of the runtime layer.
+The compiler layer decides whether a new or revised practice deserves to exist.
 
-## 📂 Files
-
-### 🚪 `CSBP-entry-point.txt`
-
-Bootstrap and routing layer. Read first, every session. Defines what CSBP is, authority order, the two usage modes, and write restrictions. Fixed. Do not modify, rewrite, or extend.
-
-### 📌 `shared-best-practice.txt`
-
-Runtime layer. Stores promoted practices only. Each practice uses a fixed block shape:
-
-| Field | Purpose |
-|---|---|
-| `id` | Sequential identifier assigned at promotion (`PNNN`) |
-| `status` | `active` or `deprecated` |
-| `scope` | `global` or `environment-global` |
-| `kind` | `environment`, `orientation`, `operation`, or `verification` |
-| `applies_when` | Operational condition for relevance |
-| `goal` | Intended operational effect |
-| `do` | Primary correct default action |
-| `avoid` | Recurring wrong pattern |
-
-If `status` is `deprecated`, stop reading the block.
-
-### 🧪 `shared-best-practice-compiler.txt`
-
-Formation layer. Loaded only for practice formation work. Governs candidate intake, admission and rejection rules, normalization, proposal shape, and the full promotion lifecycle. Fixed. Do not modify, rewrite, or extend.
-
-![A sci-fi visual metaphor for AGENTS, authority, policy, sessions, and environment linked through a controlled operational graph.](assets/images/authority-network.png)
-
-## 🏛️ Authority order
-
-```text
-operator instruction > AGENTS.md > local project instructions or project-local guidance > CSBP
-```
-
-CSBP never overrides higher-authority instructions. Conflicting items are not applied.
-
-## ⚙️ How it works
-
-1. Codex reads `CSBP-entry-point.txt`. That activates CSBP for the session.
-2. Codex loads `shared-best-practice.txt`. Active practices are applied when relevant.
-3. Codex reads `shared-best-practice-compiler.txt` only when formation work is required.
-
-The two modes are intentionally separated. Compiler logic does not bleed into runtime behavior.
-
-That separation also shapes the workflow.
-
-If the operator has a possible rule in mind, they discuss it with Codex against the current environment and the compiler rules. Codex proposes a candidate, the rule is refined or rejected, and only approved output reaches the runtime file.
-
-The other common entry point is session review. After a block of work, the operator can ask Codex to examine the session and look for candidate rules that fit CSBP. Codex can propose and discuss. It does not write new runtime practice on its own.
-
-If there are no active relevant practices in `shared-best-practice.txt`, CSBP continues without runtime guidance. If no candidate practice is under discussion, the compiler layer does not load into runtime behavior.
-
-## ♻️ Practice lifecycle
-
-```text
-candidate  -> evaluate -> normalize -> promote | reject
-active     -> revise
-active     -> deprecate
-deprecated -> remove (on direct operator instruction only)
-```
-
-No practice enters the runtime without operator approval. The operator assigns the final `PNNN` identifier at promotion, not during proposal.
-
-## 🎯 Promotion criteria
-
-A candidate is admitted when it is recurring across sessions, global or environment-global in scope, actionable during real work, preventive by default, and not already covered by `AGENTS.md` or a stronger local instruction.
-
-A candidate is rejected when it is project-specific, session-specific, one-off, vague, diagnostic-only, recovery-only, duplicate, or reads like policy or explanation instead of operational instruction.
-
-## 📝 Proposal shape
-
-```text
-candidate:      short description of the pattern
-kind:           environment | orientation | operation | verification
-scope:          global | environment-global
-rationale:      one short operational sentence
-proposed block: full block shape draft
-```
-
-ID is left unassigned until operator promotion.
+Those jobs must not collapse into each other.
 
 ## 🧱 Install
+
+Recommended layout:
 
 ```text
 .codex/
@@ -169,285 +90,345 @@ ID is left unassigned until operator promotion.
     shared-best-practice-compiler.txt
 ```
 
-Wire `CSBP-entry-point.txt` into your `.codex/AGENTS.md` so a fresh chat reads it before using the system. The exact bootstrap line depends on your host environment contract.
+Wire `CSBP-entry-point.txt` into your `.codex/AGENTS.md` so a fresh Codex session reads it before using CSBP.
 
-## 🔌 Compatibility
+The exact bootstrap line depends on your host environment contract.
 
-If CSBP is your persistent best-practice system, disable Codex memories. Running both at the same time creates two competing sources of guidance.
 
-The same caution applies to other automatic note-taking or persistence layers that turn session carryover into behavior over time without explicit review and promotion.
+## 🎯 What CSBP controls
 
-## 🛎️ When to change what
+CSBP controls persistence of recurring operational practice.
 
-Change `shared-best-practice.txt` when a practice has passed through the compiler path and the operator has approved the action.
+It is built for patterns like:
 
-Do not change, rewrite, or extend `CSBP-entry-point.txt` or `shared-best-practice-compiler.txt` during runtime use or practice formation work. Those are the fixed system-definition layers.
+- the same mistake keeps appearing across sessions
+- Codex repeatedly misses the same verification step
+- a useful working default keeps being rediscovered
+- an environment-level constraint should be remembered
+- a recurring operational correction should be available without rewriting `AGENTS.md`
 
-<details>
-<summary><strong>🔬 Technical Protocol Details</strong></summary>
+A valid CSBP practice should be:
 
-### 🧱 System model
+- recurring
+- actionable
+- preventive
+- broader than one project or one session
+- compatible with higher-authority instructions
+- short enough to apply during real work
 
-CSBP is a layered protocol system, not a single instruction file and not a memory dump. Its mechanics depend on strict separation between bootstrap, runtime application, and practice formation.
+It should tell Codex what to do by default, and what recurring wrong pattern to avoid.
 
-| Layer | File | Operational role | Mutable at runtime | Read timing |
-|---|---|---|---|---|
-| Bootstrap layer | `CSBP-entry-point.txt` | Defines system identity, authority order, load order, mode routing, and write restrictions | No | First |
-| Runtime layer | `shared-best-practice.txt` | Stores already promoted practices that may guide live work when relevant | Yes, but only through the compiler path and with operator approval | After bootstrap |
-| Compiler layer | `shared-best-practice-compiler.txt` | Governs formation, evaluation, normalization, promotion, revision, deprecation, removal, and rejection of practices | No during normal runtime use | Only during practice formation work |
+## 🔄 Runtime behavior
 
-### ⚙️ Core mechanical principle
+During normal work, CSBP does not create new practices.
 
-The protocol works by keeping three different jobs separate:
+It only applies already-promoted active practices when their `applies_when` condition matches the current work.
 
-| Job | Description | Why separation matters |
-|---|---|---|
-| Define the system | Explain what CSBP is, how it is loaded, and what authority it has | Prevents the runtime layer from redefining the system |
-| Apply promoted practices | Use only already-approved runtime instructions when they are relevant | Prevents speculative or draft guidance from becoming active behavior |
-| Form or revise practices | Evaluate whether a recurring pattern deserves promotion into runtime | Prevents discussion and drafting logic from leaking into normal operation |
+Runtime reading is strict:
 
-If those jobs are mixed together, CSBP stops being a controlled best-practice layer and starts behaving like an unstable second contract.
+1. check `status`
+2. skip deprecated blocks
+3. check `applies_when`
+4. use `goal` to interpret the practice
+5. apply `do` as the default move
+6. use `avoid` as the competing-pattern guard
 
-### 🏛️ Authority and conflict handling
+If there are no active relevant practices, Codex continues without CSBP runtime guidance.
 
-CSBP is explicitly lower-authority than operator instruction, `AGENTS.md`, and local project rules.
+No active match means no forced behavior.
+
+## 🧪 Practice formation
+
+Practice formation starts only when the operator asks for it.
+
+That can happen in two common ways:
+
+### 💬 From an operator observation
+
+The operator notices a recurring issue and asks Codex whether it belongs in CSBP.
+
+Codex checks the pattern against the compiler rules, then proposes, revises, splits, narrows, or rejects the candidate.
+
+### 🔍 From session review
+
+After a block of work, the operator asks Codex to review the session for possible recurring practices.
+
+Codex may propose candidates.
+
+It does not promote them by itself.
+
+### ✅ Promotion path
+
+A typical path:
+
+1. operator raises or asks for a candidate
+2. Codex evaluates recurrence, scope, actionability, and authority
+3. the candidate is normalized into runtime block shape
+4. weak or local material is rejected
+5. valid material is proposed
+6. the operator approves or rejects
+7. only approved practice enters `shared-best-practice.txt`
+
+The final `PNNN` id is assigned only at promotion.
+
+## 🚫 What stays out
+
+CSBP is not a place to store every useful thought.
+
+Material stays out when it is:
+
+- one-off
+- project-specific
+- session-specific
+- vague
+- diagnostic-only
+- recovery-only
+- policy-like
+- explanation-like
+- already covered by `AGENTS.md`
+- already covered by local instructions
+- dependent on hidden or unstable context
+- only an operator preference without stable operational need
+
+This filter is part of the system.
+
+CSBP is useful because it says no.
+
+## 🏛️ Authority
+
+CSBP is lower-authority than the operating contract around it.
 
 ```text
 operator instruction > AGENTS.md > local project instructions or project-local guidance > CSBP
 ```
 
-Operationally, that means:
+CSBP never overrides higher-authority instructions.
 
-1. CSBP may guide behavior only when no higher-authority rule overrides it.
-2. A conflicting runtime practice is not applied.
-3. CSBP does not create new policy authority for itself.
-4. Runtime practices cannot redefine scope, policy, or authority.
+If a CSBP practice conflicts with operator instruction, `AGENTS.md`, or local project guidance, the conflicting CSBP item is not applied.
 
-### 🧭 Load order and execution path
+Runtime practices do not define policy.
 
-The protocol has a fixed read order:
+Runtime practices do not define scope.
 
-1. Read `CSBP-entry-point.txt`.
-2. Activate runtime mode.
-3. Read `shared-best-practice.txt`.
-4. Apply only active and relevant practices.
-5. Read `shared-best-practice-compiler.txt` only if the current task is practice formation work.
+Runtime practices do not define authority.
 
-This order matters because CSBP should never infer its own behavior from filenames alone and should never treat the compiler as always-on runtime guidance.
+<p align="center">
+  <img src="assets/images/authority-network.png" alt="A sci-fi visual metaphor for AGENTS, authority, policy, sessions, and environment linked through a controlled operational graph." width="620">
+</p>
 
-### 🔀 Mode separation
+## 🔌 Compatibility
 
-CSBP has two distinct operating modes.
+If CSBP is your persistent best-practice layer, avoid running it alongside automatic memory systems that can also turn session carryover into future behavior.
 
-| Mode | Primary file | Purpose | What it can do | What it must not do |
+That includes Codex Memories if they are being used for the same job.
+
+Two persistence layers create unclear authority.
+
+CSBP is meant to keep persistence explicit, reviewed, and operator-approved.
+
+## 🛎️ When to change what
+
+Change `shared-best-practice.txt` only when a practice has passed through formation or maintenance and the operator has approved the action.
+
+Do not change, rewrite, or extend:
+
+- `CSBP-entry-point.txt`
+- `shared-best-practice-compiler.txt`
+
+Those are fixed system-definition layers.
+
+Runtime practice changes belong in `shared-best-practice.txt`.
+
+<details>
+<summary><strong>🔬 Technical protocol details</strong></summary>
+
+## 🧱 System model
+
+CSBP is a layered protocol system, not a single instruction file and not a memory dump.
+
+| Layer | File | Operational role | Mutable at runtime | Read timing |
 |---|---|---|---|---|
-| Runtime mode | `shared-best-practice.txt` | Apply already-promoted practices during live work | Guide decisions when `applies_when` matches | Invent new practices, revise practices silently, or use compiler logic as active behavior |
-| Practice formation mode | `shared-best-practice-compiler.txt` | Evaluate and shape candidate practices | Propose promotion, revision, deprecation, rejection, or removal | Auto-promote without approval or behave as if draft logic were active runtime policy |
+| 🚪 Bootstrap layer | `CSBP-entry-point.txt` | Defines system identity, authority order, load order, mode routing, and write restrictions. | No | First |
+| 📌 Runtime layer | `shared-best-practice.txt` | Stores already-promoted practices that may guide live work when relevant. | Yes, but only through compiler path and operator approval. | After bootstrap |
+| 🧪 Compiler layer | `shared-best-practice-compiler.txt` | Governs formation, evaluation, normalization, promotion, revision, deprecation, removal, and rejection. | No during normal runtime. | Only during practice formation work |
 
-This is one of the most important design constraints in the protocol. The compiler is intentionally powerful during formation work and intentionally inactive during ordinary runtime use.
+## ⚙️ Core mechanical principle
 
-### 🧾 Inputs and discussion transformations
+The protocol keeps three jobs separate:
 
-Practice formation does not start from one rigid input type. The compiler layer can work from several kinds of operator-supplied material.
+| Job | Description | Why separation matters |
+|---|---|---|
+| Define the system | Explain what CSBP is, how it is loaded, and what authority it has. | Prevents the runtime layer from redefining the system. |
+| Apply promoted practices | Use only already-approved runtime instructions when relevant. | Prevents speculative or draft guidance from becoming active behavior. |
+| Form or revise practices | Evaluate whether a recurring pattern deserves promotion. | Prevents discussion and drafting logic from leaking into normal operation. |
 
-| Input type | How it enters the protocol |
-|---|---|
-| Operator observation | A direct report of a recurring issue or missed opportunity |
-| Free-text description | An informal statement of a pattern or concern |
-| Conversation fragment | A slice of prior discussion used as raw formation material |
-| Rough hypothesis | An unconfirmed pattern that still needs evaluation |
-| Reported recurring mistake or omission | A concrete repeated failure mode observed during real work |
+If these jobs are mixed together, CSBP stops being a controlled best-practice layer and starts behaving like an unstable second contract.
 
-During discussion, the protocol may also transform the candidate before any promotion decision:
+## 🧭 Load order
 
-| Discussion move | Purpose |
-|---|---|
-| Reinterpret the issue | Find the underlying recurring pattern rather than the surface wording |
-| Split multiple patterns | Keep one practice focused on one recurring operational problem |
-| Merge similar patterns | Avoid redundant runtime entries |
-| Narrow or broaden the formulation | Adjust the candidate to the right operational scope |
-| Reclassify the issue | Decide whether it is operational, policy-level, project-specific, or too weak for promotion |
+Runtime path:
 
-### 📌 Runtime practice mechanics
+```text
+CSBP-entry-point.txt
+shared-best-practice.txt
+```
 
-The runtime file is not a notes file. It is a structured store of promoted instructions. Each block uses a fixed shape:
+Formation path:
+
+```text
+CSBP-entry-point.txt
+shared-best-practice.txt
+shared-best-practice-compiler.txt
+```
+
+The compiler is not loaded into normal runtime behavior.
+
+## 🔀 Mode separation
+
+| Mode | Primary file | Purpose | Can do | Must not do |
+|---|---|---|---|---|
+| Runtime mode | `shared-best-practice.txt` | Apply already-promoted practices. | Guide decisions when `applies_when` matches. | Invent, revise, promote, deprecate, or remove practices silently. |
+| Practice formation mode | `shared-best-practice-compiler.txt` | Evaluate and shape candidate practices. | Propose promotion, revision, deprecation, rejection, or removal. | Auto-promote without approval or behave as active runtime policy. |
+
+## 🧾 Runtime practice block
+
+Each promoted runtime practice uses this fixed shape:
 
 | Field | Meaning | Runtime function |
 |---|---|---|
-| `id` | Sequential identifier in `PNNN` form | Stable reference for review and maintenance |
-| `status` | `active` or `deprecated` | Determines whether the block can guide live work |
-| `scope` | `global` or `environment-global` | Signals how broadly the practice is meant to hold |
-| `kind` | `environment`, `orientation`, `operation`, or `verification` | Aids interpretation of the practice's role |
-| `applies_when` | Operational condition | Decides whether the practice is relevant now |
-| `goal` | Intended effect | Explains what the practice is trying to prevent or achieve |
-| `do` | Preferred default action | The main instruction to apply |
-| `avoid` | Competing failure pattern | The pattern the protocol is trying to keep out |
+| `id` | Sequential identifier in `PNNN` form. | Stable reference. |
+| `status` | `active` or `deprecated`. | Determines runtime eligibility. |
+| `scope` | `global` or `environment-global`. | Signals breadth of relevance. |
+| `kind` | `environment`, `orientation`, `operation`, or `verification`. | Helps interpret the practice role. |
+| `applies_when` | Operational condition. | Decides whether the practice is relevant now. |
+| `goal` | Intended operational effect. | Explains the purpose. |
+| `do` | Preferred default action. | Main instruction to apply. |
+| `avoid` | Competing failure pattern. | Guard against regression. |
 
-Runtime reading order is also fixed:
+Deprecated entries are excluded from runtime use, but can remain available for review and maintenance history.
 
-1. Check `status`.
-2. If `status` is `deprecated`, stop reading the block.
-3. Check `applies_when`.
-4. Use `goal` to interpret intent.
-5. Apply `do` as the default move.
-6. Use `avoid` as a guard against regression into the recurring bad pattern.
+## 📌 Scope and kind
 
-Deprecated entries are excluded from runtime use, but they remain available for review and maintenance history.
+Scope values:
 
-### 🗂️ Scope and kind classification
+| Value | Meaning |
+|---|---|
+| `global` | Stable across work contexts. |
+| `environment-global` | Stable across the current working environment across sessions. |
 
-Two fields do most of the structural classification work: `scope` and `kind`.
+Kind values:
 
-| Field | Value | Operational meaning |
-|---|---|---|
-| `scope` | `global` | Stable across work contexts |
-| `scope` | `environment-global` | Stable across the current working environment across sessions |
-| `kind` | `environment` | Stable condition, constraint, or affordance of the environment |
-| `kind` | `orientation` | Setup, framing, or initial approach |
-| `kind` | `operation` | Action or working method during live work |
-| `kind` | `verification` | Check, confirmation, or closure behavior |
+| Value | Meaning |
+|---|---|
+| `environment` | Stable environment condition, constraint, or affordance. |
+| `orientation` | Setup, framing, or initial approach. |
+| `operation` | Execution step or working method during real work. |
+| `verification` | Check, confirmation, or closure practice. |
 
-These fields do not just label a block. They help keep the runtime layer interpretable and prevent vague practices from entering the store.
+## ✅ Admission criteria
 
-### 🧪 Practice formation pipeline
+A candidate is admitted only when it is:
 
-CSBP treats practice creation as a controlled pipeline, not as a casual note-taking exercise.
+- recurring across sessions
+- global or environment-global
+- actionable during real work
+- preventive by default
+- expressible as a short operational instruction
+- stable across work contexts
+- not already covered by `AGENTS.md`
+- not already covered by stronger local instruction
+- likely to reduce recurring waste or error
+
+## 🚫 Rejection criteria
+
+Reject material that is:
+
+- project-specific
+- session-specific
+- one-off
+- vague
+- diagnostic-only
+- recovery-only
+- post-failure only
+- duplicate
+- too broad to match reliably
+- too narrow to matter outside one case
+- in conflict with higher-authority instructions
+- dependent on hidden or unstable context
+- explanation instead of instruction
+- policy instead of operational correction
+
+## 🧹 Normalization
+
+Candidate practices should be rewritten as:
+
+- preventive defaults
+- runtime-ready instructions
+- one pattern per practice
+- short stable wording
+- direct verbs
+
+Remove:
+
+- narrative
+- non-operational explanation
+- project-specific detail
+- fallback phrasing
+- recovery-first phrasing
+
+## ♻️ Lifecycle
 
 ```text
-candidate -> evaluate -> normalize -> promote | reject
-active    -> revise
-active    -> deprecate
+candidate  -> evaluate -> normalize -> promote | reject
+active     -> revise
+active     -> deprecate
 deprecated -> remove
 ```
 
-Each stage has a different function:
+Removal requires direct operator instruction.
 
-| Stage | Function |
-|---|---|
-| Candidate | A reported recurring issue, omission, or rough hypothesis enters discussion |
-| Evaluate | The candidate is tested against recurrence, scope, usefulness, and overlap with stronger rules |
-| Normalize | The wording is rewritten into a short, preventive, runtime-ready instruction |
-| Promote | The candidate becomes an active runtime practice |
-| Reject | The candidate is kept out of runtime because it is weak, local, duplicate, unstable, or otherwise unsuitable |
-| Revise | An active practice is improved without changing the basic need it covers |
-| Deprecate | An active practice is retained for reference but removed from live runtime use |
-| Remove | A deprecated or invalid practice is deleted, but only on direct operator instruction |
+Runtime maintenance uses the compiler protocol and requires operator approval.
 
-### 🎯 Admission and rejection logic
+## 📝 Proposal shape
 
-The compiler path is designed to be selective.
+Formation proposals use this shape:
 
-| Admit when the candidate is... | Reject when the candidate is... |
-|---|---|
-| Recurring across sessions | Project-specific |
-| Global or environment-global | Session-specific |
-| Actionable during live work | One-off |
-| Preventive by default | Vague |
-| Expressible as a short operational instruction | Diagnostic-only |
-| Stable across work contexts | Recovery-only or post-failure only |
-| Not already covered by stronger rules | Duplicate of existing practice or `AGENTS.md` |
-| Likely to reduce waste or recurring error | Too broad, too narrow, or dependent on hidden context |
+```text
+candidate:      short description of the pattern
+kind:           environment | orientation | operation | verification
+scope:          global | environment-global
+rationale:      one short operational sentence
+proposed block: full block shape draft
+```
 
-The normalization step is what turns a useful observation into a practice. It removes narrative, removes local detail, and rewrites the idea as a stable operational default.
+The `id` is left unassigned until operator-approved promotion.
 
-### 🌐 External check policy
+## 🧯 Conflict handling
 
-The compiler layer may optionally suggest a lightweight web check when outside recurrence could materially clarify a decision.
+CSBP is explicitly lower-authority than:
 
-| Rule | Meaning |
-|---|---|
-| Optional, not default | External checks are allowed but not required for every candidate |
-| Corroboration, not proof | The check supports practical judgment rather than replacing it |
-| Prefer primary practical sources | Sources should be close to the real environment, workflow, or tool |
-| Avoid broad research | The protocol does not call for unnecessary internet research when local evidence is already enough |
+```text
+operator instruction
+AGENTS.md
+local project instructions or project-local guidance
+```
 
-### 📏 Block quality rules
+If a CSBP item conflicts with any of those, the CSBP item is not applied.
 
-The compiler does not only decide whether a practice is useful. It also enforces structural quality before promotion.
+CSBP does not create new policy authority for itself.
 
-| Rule | Why it matters |
-|---|---|
-| One practice = one recurring pattern | Prevents overloaded blocks that try to solve multiple issues at once |
-| Split if more than one main action or wrong pattern is present | Keeps runtime guidance precise and reusable |
-| Rewrite or reject if too broad | Avoids vague rules that match too many situations |
-| Rewrite or reject if too narrow | Avoids rules that only fit one isolated case |
-| Rewrite or reject if overly explanatory | Keeps the runtime layer operational rather than essay-like |
-| Re-evaluate split fragments independently | Prevents weak sub-patterns from being promoted automatically |
+## ✍️ Manual maintenance
 
-### 🔒 Mutability rules
+Manual maintenance is allowed if the operator follows the documented block shape and promotion rules.
 
-Not all files in CSBP have the same status.
+Manual does not mean casual.
 
-| File | Status | Edit rule |
-|---|---|---|
-| `CSBP-entry-point.txt` | Fixed system-definition layer | Do not modify during runtime use or formation work |
-| `shared-best-practice-compiler.txt` | Fixed system-definition layer | Do not modify during runtime use or formation work |
-| `shared-best-practice.txt` | Mutable runtime layer | Modify only through the compiler path and only with operator approval |
-
-This is a key control mechanism. If the fixed layers become casually editable, the system can silently change its own operating semantics.
-
-### ✅ Approval mechanics
-
-CSBP is operator-controlled by design.
-
-| Action | Allowed automatically | Requires operator approval |
-|---|---|---|
-| Apply an already-promoted relevant practice | Yes | No |
-| Read runtime or bootstrap layers | Yes | No |
-| Propose a candidate practice | Yes | No |
-| Promote a candidate into runtime | No | Yes |
-| Revise an active runtime practice | No | Yes |
-| Deprecate a runtime practice | No | Yes |
-| Remove a deprecated or invalid practice | No | Yes, and only on direct instruction |
-
-The operator also assigns the final runtime `PNNN` identifier at promotion. IDs are not finalized during proposal.
-
-### 🚫 What CSBP explicitly is not
-
-The protocol defines several non-goals to keep scope from drifting.
-
-| CSBP is not... | Why that boundary exists |
-|---|---|
-| A replacement for `AGENTS.md` | It must remain below the host contract in authority |
-| A project-local instruction store | Its target is shared, recurring practice, not repo-specific rules |
-| A session log | Raw conversation carryover is not runtime guidance |
-| A policy or style manual | It stores operational instructions, not broad doctrine |
-| A recovery cookbook | It prefers preventive defaults over after-the-fact rescue logic |
-| An automatic memory system | Promotion requires explicit review and approval |
-
-### 🛡️ Failure modes the protocol is designed to prevent
-
-CSBP exists to guard against a specific class of operational drift:
-
-| Failure mode | Protocol countermeasure |
-|---|---|
-| Useful guidance stays trapped in chat history | Promote stable recurring practices into a dedicated runtime layer |
-| Everything gets pushed into `AGENTS.md` | Keep CSBP explicitly lower-authority and narrower in scope |
-| Draft logic becomes live behavior | Separate runtime mode from compiler mode |
-| One-off local fixes become permanent rules | Require recurrence, scope, and normalization checks |
-| Fixed system rules get rewritten casually | Lock the bootstrap and compiler layers |
-| Automatic persistence mutates behavior without review | Require operator approval before runtime promotion |
-
-### 🧩 Why the three-file architecture matters
-
-The protocol depends on the fact that each file does one main job and does not absorb the others.
-
-- If the entry-point file starts carrying runtime practices, bootstrap and application collapse together.
-- If the runtime file starts carrying compiler logic, live behavior becomes unstable and over-explanatory.
-- If the compiler file starts acting like always-on guidance, formation logic bleeds into normal execution.
-
-The three-file split is therefore not cosmetic. It is the main mechanism that makes CSBP reviewable, bounded, and safe to reuse across sessions.
+The same admission, rejection, normalization, authority, and approval constraints still apply.
 
 </details>
 
-## 🤖 AI Assistance
+## ⚖️ License
 
-This work was developed with AI assistance under direct operator guidance and review.
+This project is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License (`CC BY-SA 4.0`).
 
-The system design, framing decisions, and publication choices were shaped through human-AI collaboration rather than generated as an unreviewed autonomous output.
-
-CSBP is published as a reviewed public artifact, with AI used as a drafting, structuring, and refinement partner during development.
-
-## 📜 License
-
-This repository is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+See [`LICENSE`](./LICENSE).
