@@ -1,0 +1,108 @@
+{
+  "name": "CSBP",
+  "subtitle": "Codex Shared Best Practice",
+  "type": "Three-file Codex practice protocol kit",
+  "description": "A lightweight three-file protocol kit for keeping recurring Codex best practices explicit, reviewed, and separate from automatic memory or AGENTS.md.",
+  "page_url": "https://xxyoudeadpunkxx.github.io/CSBP-Codex-Shared-Best-Practice/",
+  "repository": "https://github.com/XxYouDeaDPunKxX/CSBP-Codex-Shared-Best-Practice",
+  "runtime": "Codex operational practice layer",
+  "purpose": "Keep recurring Codex best practices explicit, reviewed, operator-approved, and separate from automatic memory or host contract bloat.",
+  "authority_order": [
+    "operator instruction",
+    "AGENTS.md",
+    "local project instructions or project-local guidance",
+    "CSBP"
+  ],
+  "files": [
+    {
+      "path": "CSBP-entry-point.txt",
+      "role": "Bootstrap and routing layer. Defines system identity, authority order, usage modes, read order, and write restrictions.",
+      "read_timing": "First, every session.",
+      "mutable_at_runtime": false
+    },
+    {
+      "path": "shared-best-practice.txt",
+      "role": "Runtime layer. Stores promoted practices only. Active practices may guide work when relevant.",
+      "read_timing": "After entry point.",
+      "mutable_at_runtime": "Only through compiler path and operator approval."
+    },
+    {
+      "path": "shared-best-practice-compiler.txt",
+      "role": "Formation layer. Evaluates, normalizes, promotes, revises, deprecates, removes, or rejects candidate practices.",
+      "read_timing": "Only when the operator opens practice formation or maintenance work.",
+      "mutable_at_runtime": false
+    }
+  ],
+  "install_layout": [
+    ".codex/memories/CSBP-entry-point.txt",
+    ".codex/memories/shared-best-practice.txt",
+    ".codex/memories/shared-best-practice-compiler.txt"
+  ],
+  "runtime_behavior": [
+    "No automatic memory capture.",
+    "No silent rule creation.",
+    "No background promotion.",
+    "No runtime writes by default.",
+    "No practice changes without operator approval.",
+    "Applies already-promoted active practices only when applies_when matches current work.",
+    "No active match means no forced behavior."
+  ],
+  "formation_path": [
+    "Operator raises or asks for a candidate.",
+    "Codex evaluates recurrence, scope, actionability, and authority.",
+    "The candidate is normalized into runtime block shape.",
+    "Weak or local material is rejected.",
+    "Valid material is proposed.",
+    "The operator approves or rejects.",
+    "Only approved practice enters shared-best-practice.txt."
+  ],
+  "practice_admission_criteria": [
+    "recurring across sessions",
+    "global or environment-global",
+    "actionable during real work",
+    "preventive by default",
+    "expressible as a short operational instruction",
+    "stable across work contexts",
+    "not already covered by AGENTS.md",
+    "not already covered by stronger local instruction",
+    "likely to reduce recurring waste or error"
+  ],
+  "rejection_criteria": [
+    "project-specific",
+    "session-specific",
+    "one-off",
+    "vague",
+    "diagnostic-only",
+    "recovery-only",
+    "post-failure only",
+    "duplicate",
+    "too broad to match reliably",
+    "too narrow to matter outside one case",
+    "in conflict with higher-authority instructions",
+    "dependent on hidden or unstable context",
+    "explanation instead of instruction",
+    "policy instead of operational correction"
+  ],
+  "runtime_practice_block_fields": [
+    "id",
+    "status",
+    "scope",
+    "kind",
+    "applies_when",
+    "goal",
+    "do",
+    "avoid"
+  ],
+  "compatibility": "If CSBP is the persistent best-practice layer, avoid running it alongside automatic memory systems that can also turn session carryover into future behavior.",
+  "keywords": [
+    "Codex",
+    "Codex best practices",
+    "operational practice",
+    "review gate",
+    "AGENTS.md",
+    "shared best practice",
+    "explicit persistence",
+    "operator approval",
+    "CSBP"
+  ]
+}
