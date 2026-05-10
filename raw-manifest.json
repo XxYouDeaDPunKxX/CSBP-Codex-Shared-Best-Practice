@@ -3,10 +3,21 @@
   "subtitle": "Codex Shared Best Practice",
   "type": "Three-file Codex practice protocol kit",
   "description": "A lightweight three-file protocol kit for keeping recurring Codex best practices explicit, reviewed, and separate from automatic memory or AGENTS.md.",
+  "url": "https://xxyoudeadpunkxx.github.io/CSBP-Codex-Shared-Best-Practice/",
   "page_url": "https://xxyoudeadpunkxx.github.io/CSBP-Codex-Shared-Best-Practice/",
   "repository": "https://github.com/XxYouDeaDPunKxX/CSBP-Codex-Shared-Best-Practice",
   "runtime": "Codex operational practice layer",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "canonical_entry_file": "CSBP-entry-point.txt",
+  "canonical_files": [
+    "CSBP-entry-point.txt",
+    "shared-best-practice.txt",
+    "shared-best-practice-compiler.txt"
+  ],
+  "identity": "Not a rule, not a vibe. A reviewed practice layer below the host contract.",
   "purpose": "Keep recurring Codex best practices explicit, reviewed, operator-approved, and separate from automatic memory or host contract bloat.",
+  "use_case": "Use CSBP when Codex keeps repeating the same operational mistake, when useful guidance is buried in chat history, or when a recurring practice is useful but not strong enough to become a project rule.",
   "authority_order": [
     "operator instruction",
     "AGENTS.md",
@@ -94,6 +105,26 @@
     "avoid"
   ],
   "compatibility": "If CSBP is the persistent best-practice layer, avoid running it alongside automatic memory systems that can also turn session carryover into future behavior.",
+  "discovery_set": {
+    "llms": "llms.txt",
+    "manifest": "raw-manifest.json",
+    "robots": "robots.txt",
+    "sitemap": "sitemap.xml",
+    "html_signals": [
+      "canonical URL",
+      "rel=alternate for llms.txt",
+      "rel=alternate for raw-manifest.json",
+      "JSON-LD SoftwareSourceCode metadata",
+      "Open Graph metadata",
+      "footer machine-readable links"
+    ]
+  },
+  "machine_readable_files": [
+    "llms.txt",
+    "raw-manifest.json",
+    "robots.txt",
+    "sitemap.xml"
+  ],
   "keywords": [
     "Codex",
     "Codex best practices",
@@ -103,6 +134,9 @@
     "shared best practice",
     "explicit persistence",
     "operator approval",
-    "CSBP"
+    "CSBP",
+    "Codex practice governance",
+    "practice compiler",
+    "runtime practice layer"
   ]
 }
